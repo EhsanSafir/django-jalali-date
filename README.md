@@ -3,7 +3,7 @@
 [![PyPi Version](https://img.shields.io/pypi/v/django-jalali-date.svg)](https://pypi.python.org/pypi/django-jalali-date)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/django-jalali-date.svg)](https://pypistats.org/packages/django-jalali-date)
 [![GitHub stars](https://img.shields.io/github/stars/a-roomana/django-jalali-date.svg?style=social)](https://github.com/a-roomana/django-jalali-date)
-# django-jalali-date
+# django-jalali-date Dari
 
 Jalali Date support for user interface. Easy conversion of DateTimeFiled to JalaliDateTimeField within the admin site, view and templates.
 
@@ -34,9 +34,9 @@ settings.py
 ```python
 INSTALLED_APPS = [
 	'django_apps',
-	
+
 	'jalali_date',
-	
+
 	'my_apps',
 ]
 
@@ -94,7 +94,7 @@ class TestForm(forms.ModelForm):
         # you can added a "class" to this field for use your datepicker!
         # self.fields['date'].widget.attrs.update({'class': 'jalali_date-date'})
 
-        self.fields['date_time'] = SplitJalaliDateTimeField(label=_('date time'), 
+        self.fields['date_time'] = SplitJalaliDateTimeField(label=_('date time'),
             widget=AdminSplitJalaliDateTime # required, for decompress DatetimeField to JalaliDateField and JalaliTimeField
         )
 ```
@@ -122,19 +122,19 @@ template.html
 admin.py
 ```python
 from django.contrib import admin
-from jalali_date.admin import ModelAdminJalaliMixin, StackedInlineJalaliMixin, TabularInlineJalaliMixin	
-    
+from jalali_date.admin import ModelAdminJalaliMixin, StackedInlineJalaliMixin, TabularInlineJalaliMixin
+
 class MyInlines1(TabularInlineJalaliMixin, admin.TabularInline):
 	model = SecendModel
 
 class MyInlines2(StackedInlineJalaliMixin, admin.StackedInline):
 	model = ThirdModel
-	
+
 @admin.register(FirstModel)
 class FirstModelAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
-	# show jalali date in list display 
+	# show jalali date in list display
 	list_display = ['some_fields', 'get_created_jalali']
-	
+
 	inlines = (MyInlines1, MyInlines2, )
 	raw_id_fields = ('some_fields', )
 	readonly_fields = ('some_fields', 'date_field',)
@@ -142,10 +142,10 @@ class FirstModelAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
 	formfield_overrides = {
 	    JSONField: {'widget': JSONEditor},
 	}
-	
+
 	def get_created_jalali(self, obj):
 		return datetime2jalali(obj.created).strftime('%y/%m/%d _ %H:%M:%S')
-	
+
 	get_created_jalali.short_description = 'تاریخ ایجاد'
 	get_created_jalali.admin_order_field = 'created'
 ```
